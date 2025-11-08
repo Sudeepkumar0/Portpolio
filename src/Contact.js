@@ -1,8 +1,44 @@
-import React from "react";
+// React is imported with hooks below
 import "./styles/Contact.css";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import React, { useState } from "react";
 
 export default function Contact() {
+  const [status, setStatus] = useState(null); // null | 'sending' | 'success' | 'error'
+  const FORM_URL = "https://formspree.io/f/mgvrworw";
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    setStatus("sending");
+    const payload = {
+      name: form.elements.name.value.trim(),
+      email: form.elements.email.value.trim(),
+      phone: form.elements.phone ? form.elements.phone.value.trim() : "",
+      message: form.elements.message.value.trim(),
+    };
+
+    try {
+      const res = await fetch(FORM_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+        // clear success message after a short delay
+        setTimeout(() => setStatus(null), 5000);
+      } else {
+        console.error("Formspree error", await res.text());
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    }
+  }
+
   return (
     <section id="contact" className="section contact-section">
       <div className="container contact-inner">
@@ -29,7 +65,7 @@ export default function Contact() {
             <div className="socials">
               <a
                 aria-label="GitHub"
-                href="https://github.com/your-username"
+                href="https://github.com/Sudeepkumar0"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -37,7 +73,7 @@ export default function Contact() {
               </a>
               <a
                 aria-label="LinkedIn"
-                href="https://linkedin.com/in/your-username"
+                href="https://www.linkedin.com/in/g-sudeep-kumar-aa1bb6253/"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -45,7 +81,7 @@ export default function Contact() {
               </a>
               <a
                 aria-label="Twitter"
-                href="https://twitter.com/your-username"
+                href="https://x.com/Sudeep_kumar001"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -56,26 +92,7 @@ export default function Contact() {
         </div>
 
         <div className="contact-right fade-up">
-          <form
-            className="contact-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const form = e.currentTarget;
-              const name = form.elements.name.value.trim();
-              const email = form.elements.email.value.trim();
-              const phone = form.elements.phone
-                ? form.elements.phone.value.trim()
-                : "";
-              const message = form.elements.message.value.trim();
-              const subject = encodeURIComponent(
-                `Contact from ${name || "Website"}`
-              );
-              const body = encodeURIComponent(
-                `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`
-              );
-              window.location.href = `mailto:your.email@example.com?subject=${subject}&body=${body}`;
-            }}
-          >
+          <form className="contact-form" onSubmit={handleSubmit}>
             <div className="top-row">
               <div className="field">
                 <label className="field-label">Your Name</label>
@@ -101,8 +118,8 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="field">
-              <label className="field-label">Message</label>
+            <div className="field message-field">
+              <label className="field-label message-label">Message</label>
               <textarea
                 name="message"
                 id="message"
@@ -112,9 +129,25 @@ export default function Contact() {
             </div>
 
             <div className="form-actions">
-              <button className="btn btn-primary" type="submit">
-                Send Message
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={status === "sending"}
+              >
+                {status === "sending" ? "Sending..." : "Send Message"}
               </button>
+
+              {status === "success" && (
+                <div className="contact-status contact-success">
+                  Message sent — thank you!
+                </div>
+              )}
+              {status === "error" && (
+                <div className="contact-status contact-error">
+                  There was an error sending your message. Please try again
+                  later.
+                </div>
+              )}
             </div>
           </form>
         </div>

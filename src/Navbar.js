@@ -57,6 +57,17 @@ export default function Navbar() {
                 Contact
               </a>
             </li>
+            <li role="none" className="mobile-only">
+              <a
+                role="menuitem"
+                href="https://leetcode.com/u/G_Sudeep_kumar/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                leatcode
+              </a>
+            </li>
           </ul>
         </div>
 

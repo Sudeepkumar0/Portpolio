@@ -158,6 +158,11 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* helper: show items only on small screens (mobile hamburger) */
+.mobile-only {
+  display: none;
+}
+
 /* Responsive */
 @media (max-width: 720px) {
   .nav-toggle {
@@ -208,5 +213,9 @@
   }
   .nav-links li {
     padding: 0.5rem 0.8rem;
+  }
+  /* reveal mobile-only items inside the collapsed menu */
+  .mobile-only {
+    display: block;
   }
 }

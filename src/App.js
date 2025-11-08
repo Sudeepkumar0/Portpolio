@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import "./styles/styles.css";
+import "./styles/cursor.css";
 import Skills from "./Skills";
 import Contact from "./Contact";
 import Projects from "./Projects";
 import Footer from "./Footer";
+import { initCustomCursor } from "./utils/customCursor";
 
 function App() {
+  useEffect(() => {
+    const cleanup = initCustomCursor({
+      interactiveSelector: "a,button,.btn,.project-cta",
+    });
+    return () => cleanup && cleanup();
+  }, []);
   return (
     <>
       <Navbar />

@@ -45,7 +45,7 @@ export default function Footer() {
 
           <a
             className="icon-link"
-            href="mailto:sudeep@leatcode.com"
+            href="mailto:sudeepkumar.connect@gmail.com"
             aria-label="Email"
           >
             <FaEnvelope />

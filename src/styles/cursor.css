@@ -1,0 +1,73 @@
+/* Custom cursor styles: subtle trailing dot + click ripple + hover grow */
+:root {
+  --cursor-size: 10px;
+  --cursor-hover-size: 18px;
+  --cursor-color: var(--accent, #3b82f6);
+}
+
+.custom-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  margin-left: calc(var(--cursor-size) / -2);
+  margin-top: calc(var(--cursor-size) / -2);
+  border-radius: 50%;
+  background: var(--cursor-color);
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  transition: width 220ms ease, height 220ms ease, background 220ms ease,
+    box-shadow 220ms ease;
+  z-index: 9999;
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.14);
+}
+
+.custom-cursor.cursor--hover {
+  width: var(--cursor-hover-size);
+  height: var(--cursor-hover-size);
+  margin-left: calc(var(--cursor-hover-size) / -2);
+  margin-top: calc(var(--cursor-hover-size) / -2);
+  background: rgba(59, 130, 246, 0.14);
+  border: 1px solid var(--cursor-color);
+}
+
+.cursor-ripple {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  margin-top: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  pointer-events: none;
+  transform-origin: center;
+  transform: translate3d(0, 0, 0) scale(0.4);
+  opacity: 0;
+  z-index: 9998;
+}
+
+.cursor-ripple.ripple-animate {
+  animation: ripple 600ms ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+/* Hide custom cursor on reduced-motion and touch devices */
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .custom-cursor,
+  .cursor-ripple {
+    display: none !important;
+  }
+}
