@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import "./styles/styles.css";
@@ -8,16 +8,25 @@ import Contact from "./Contact";
 import Projects from "./Projects";
 import Footer from "./Footer";
 import { initCustomCursor } from "./utils/customCursor";
+import Splash from "./Splash";
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  // initialize custom cursor only after splash hides (so it doesn't show through)
   useEffect(() => {
+    if (showSplash) return undefined;
     const cleanup = initCustomCursor({
       interactiveSelector: "a,button,.btn,.project-cta",
     });
     return () => cleanup && cleanup();
-  }, []);
+  }, [showSplash]);
   return (
     <>
+      {showSplash && (
+        <Splash duration={1200} onFinish={() => setShowSplash(false)} />
+      )}
+
       <Navbar />
       <Hero />
 
