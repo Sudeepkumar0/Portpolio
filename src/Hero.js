@@ -4,6 +4,8 @@ import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Hero() {
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [reveal, setReveal] = useState(false);
   // Typewriter role
   const roles = React.useMemo(
     () => [
@@ -38,8 +40,50 @@ export default function Hero() {
     }
     return () => clearTimeout(timeout);
   }, [displayed, deleting, roleIndex, roles]);
+
+  // landing animation and scroll-up reveal
+  useEffect(() => {
+    // respect reduced motion
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      setMounted(true);
+      return;
+    }
+
+    // mount animation on load
+    const t = setTimeout(() => setMounted(true), 80);
+
+    let lastY = window.scrollY;
+    let revealTimer = null;
+
+    function onScroll() {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      // if scrolling up (delta < 0) and near the top, show reveal
+      if (delta < 0 && y < 220) {
+        setReveal(true);
+        clearTimeout(revealTimer);
+        revealTimer = setTimeout(() => setReveal(false), 700);
+      }
+      lastY = y;
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(revealTimer);
+    };
+  }, []);
   return (
-    <header className="hero">
+    <header
+      className={`hero ${mounted ? "hero--entered" : "hero--entering"} ${
+        reveal ? "hero--reveal" : ""
+      }`}
+    >
       <div className="container hero-inner">
         <div className="hero-content fade-up">
           <h1 className="hero-title">Hello</h1>
