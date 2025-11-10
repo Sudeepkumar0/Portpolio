@@ -7,7 +7,8 @@
   top: 0px; /* push navbar down slightly from the top of the viewport */
   z-index: 50;
   transition: background-color 220ms ease, box-shadow 220ms ease,
-    backdrop-filter 220ms ease, padding 220ms ease, min-height 220ms ease;
+    backdrop-filter 220ms ease, padding 220ms ease, min-height 220ms ease,
+    transform 260ms ease;
   /* make navbar visually smaller via variables (declared below) */
   font-size: var(--nav-font-size, 14px);
 }
@@ -169,6 +170,11 @@
 @media (max-width: 720px) {
   .nav-toggle {
     display: inline-flex;
+  }
+  /* hide/disable navbar when nav-hidden class is present (mobile only) */
+  .site-navbar.nav-hidden {
+    transform: translateY(-112%);
+    pointer-events: none;
   }
   /* On small screens: hide inline pills and show collapsed menu */
   .nav-pill {

@@ -107,6 +107,17 @@ p {
 .section {
   margin-top: 28px;
 }
+
+/* Ensure in-page anchor targets appear below the sticky navbar on desktop.
+   Use scroll-margin-top so fragment navigation and scrollIntoView place the
+   section's top just under the navbar. On small screens the navbar is taller
+   or different, so we only apply this on wider viewports. */
+@media (min-width: 720px) {
+  .section,
+  section[id] {
+    scroll-margin-top: calc(var(--nav-min-height, 72px) + 8px);
+  }
+}
 .section p {
   margin-top: 8px;
 }

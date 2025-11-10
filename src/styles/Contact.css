@@ -170,6 +170,9 @@
 }
 
 @media (max-width: 900px) {
+  /* .contact-section {
+    margin-top: 50px;
+  } */
   .contact-inner {
     flex-direction: column;
   }

@@ -5,10 +5,38 @@ import { FaBars, FaTimes } from "react-icons/fa";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hiddenOnScroll, setHiddenOnScroll] = useState(false);
 
   useEffect(() => {
+    let lastY = window.scrollY;
     const onScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const y = window.scrollY;
+      setScrolled(y > 30);
+
+      // on small screens, hide the navbar when the user scrolls down and
+      // reveal it when they scroll up. Use a small threshold to avoid
+      // jitter from minor scrolls.
+      try {
+        const isMobile = window.matchMedia("(max-width: 720px)").matches;
+        if (isMobile) {
+          const delta = y - lastY;
+          if (delta > 12) {
+            // scrolling down
+            setHiddenOnScroll(true);
+            setOpen(false);
+          } else if (delta < -12) {
+            // scrolling up
+            setHiddenOnScroll(false);
+          }
+        } else {
+          // ensure visible on larger screens
+          setHiddenOnScroll(false);
+        }
+      } catch (e) {
+        // graceful fallback: do nothing
+      }
+
+      lastY = y;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -18,7 +46,11 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`site-navbar ${scrolled ? "scrolled" : ""}`}>
+    <nav
+      className={`site-navbar ${scrolled ? "scrolled" : ""} ${
+        hiddenOnScroll ? "nav-hidden" : ""
+      }`}
+    >
       <div className="nav-container">
         {/* Left pill */}
         <div className="nav-pill nav-left" aria-hidden>

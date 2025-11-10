@@ -11,6 +11,8 @@ export default function Hero() {
     () => [
       "Full-Stack Developer",
       "React • Node • SQL",
+      "Vibe Coder",
+      "Tech Enthusiast",
       "Open Source Enthusiast",
     ],
     []
@@ -55,8 +57,8 @@ export default function Hero() {
     // mount animation on load
     // add a slightly longer delay so the page chrome settles before the
     // hero pops in; this produces a clearer initial entrance on slower devices
-  const MOUNT_DELAY = 700; // ms — start hero after app-level pop finishes
-  const t = setTimeout(() => setMounted(true), MOUNT_DELAY);
+    const MOUNT_DELAY = 700; // ms — start hero after app-level pop finishes
+    const t = setTimeout(() => setMounted(true), MOUNT_DELAY);
 
     let lastY = window.scrollY;
     let revealTimer = null;
