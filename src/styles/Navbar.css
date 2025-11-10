@@ -3,7 +3,8 @@
   background: transparent;
   color: #7e7474;
   position: sticky;
-  top: 12px; /* push navbar down slightly from the top of the viewport */
+  height: 70px;
+  top: 0px; /* push navbar down slightly from the top of the viewport */
   z-index: 50;
   transition: background-color 220ms ease, box-shadow 220ms ease,
     backdrop-filter 220ms ease, padding 220ms ease, min-height 220ms ease;
@@ -27,10 +28,11 @@
 
 .site-navbar.scrolled {
   /* translucent cream background on scroll (matches --bg: #f8eee9) */
-  background: rgba(248, 238, 233, 0.95);
+  /* background: rgba(248, 238, 233, 0.95); */
+  background: transparent;
   box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
-  -webkit-backdrop-filter: saturate(120%) blur(6px);
-  backdrop-filter: saturate(120%) blur(6px);
+  /* -webkit-backdrop-filter: saturate(120%) blur(6px); */
+  /* backdrop-filter: saturate(120%) blur(6px); */
   /* reduce sizing via CSS variables for an easy, animated shrink */
   --nav-min-height: 56px;
   --nav-padding-y: 0.45rem;

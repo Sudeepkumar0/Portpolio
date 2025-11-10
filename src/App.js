@@ -27,10 +27,11 @@ function App() {
         <Splash duration={1200} onFinish={() => setShowSplash(false)} />
       )}
 
-      <Navbar />
-      <Hero />
+      <div className={`app-root ${showSplash ? "app-root--hidden" : "app-root--visible"}`}>
+        <Navbar />
+        <Hero />
 
-      <main className="container main-content">
+        <main className="container main-content">
         <section
           id="about"
           className="section about-section"
@@ -114,8 +115,9 @@ function App() {
         <Projects />
 
         <Contact />
-      </main>
-      <Footer />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }

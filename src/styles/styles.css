@@ -1,5 +1,5 @@
 :root {
-  --bg: #f1eeee; /* cream white (updated) */
+  --bg: #f2f3f5; /* #f1eeee;  cream white (updated) */
   --text: #222222; /* charcoal black */
   --accent: #3b82f6; /* soft blue */
   --highlight: #ffd166; /* warm yellow */
@@ -17,7 +17,7 @@ body,
 body {
   margin: 0;
   /* hard fallback first, then the CSS variable to ensure exact color */
-  background: #f1eeee;
+  background: #f2f3f5;
   background: var(--bg);
   color: var(--text);
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
